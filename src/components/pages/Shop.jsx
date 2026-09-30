@@ -20,11 +20,24 @@ const Shop = () => {
 
   const [category, setCategory] = useState("all");
 
+  const [price, setPrice] = useState("all");
+
+
   const filteredProducts = allData.filter((item) => {
-    if (category === "all") {
-      return true;
+
+    if (category !== "all" && item.category !== category) {
+      return false;
     }
-    return item.category === category;
+
+    if (price === "under") {
+      return item.price < 100;
+    }
+
+    if (price === "over") {
+      return item.price > 100;
+    }
+
+    return true;
   });
 
   // the return for products / items 
@@ -37,7 +50,7 @@ const Shop = () => {
 
         {/* filter thingy  */}
 
-        <div className="flex gap-4 mb-10">
+        <div className="flex gap-4 mb-10 items-center">
 
           <button onClick={() => setCategory("all")}>
             All
@@ -59,7 +72,25 @@ const Shop = () => {
             Groceries
           </button>
 
+
+        {/* the price button  */}
+
+          <button onClick={() => setPrice("all")} className="ml-[700px]">
+            All Prices
+          </button>
+
+          <button onClick={() => setPrice("under")}>
+            Under 100
+          </button>
+
+          <button onClick={() => setPrice("over")}>
+            Over 100
+          </button>
+
         </div>
+
+
+
 
         {/* the context api product thing */}
 
@@ -96,8 +127,8 @@ const Shop = () => {
               </button>
 
               <button onClick={decrement}
-               disabled={count === 0}
-              className="px-3 py-2 ml-4 text-white bg-blue-500">
+                disabled={count === 0}
+                className="px-3 py-2 ml-4 text-white bg-blue-500">
                 -
               </button>
             </div>
